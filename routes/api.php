@@ -16,3 +16,16 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/ldap-search', function(Request $request){
+	try{
+		$creadentials = $request->only('username');
+		$username = $creadentials['username'];
+		$ldapuser = \Adldap::search()->where(env('LDAP_USER_ATTRIBUTE'), '=', $username . "")->first();
+		return response()->json($ldapuser);
+	}catch(\Exception $e){
+		//return 'fdsfdsfsdf';
+		return response()->json(["message" => $e->getMessage()], 200);
+	}
+});

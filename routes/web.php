@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/roles', 'PermissionController@Permission');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/tasks/create','TaskController@create');
+Route::get('/tasks', 'TaskController@index');
+Route::post('/tasks/create','TaskController@store');
+Route::get('/tasks/{task}','TaskController@show');
+
+
